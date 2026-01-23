@@ -14,22 +14,22 @@ const PROFILE_TOKENS = {
 const BOT_TOKEN = process.env.BOT_TOKEN;
 
 // Guild and channel IDs
-const GUILD_ID = process.env.GUILD_ID;
-const CHANNEL_ID = process.env.CHANNEL_ID;
+const GUILD_ID = '1403167079414104175';
+const CHANNEL_ID = '1464078194284957758';
 
 // Webhook URLs
-const WEBHOOK_URL = process.env.WEBHOOK_URL;
+const WEBHOOK_URL = 'https://discord.com/api/webhooks/1463733457141104715/hWzvu-NmjlS75vd9e3krZ0hbepI8jg8FTvDtDS6bD-gi0MtpqwGyQpuai_weLkF2cjwQ';
 const FAKING_WEBHOOK_URL = process.env.FAKING_WEBHOOK_URL;
 
 // Image URLs per sequence (1–6)
 const IMAGE_URLS = [
-  process.env.IMAGE_URL_1,
-  process.env.IMAGE_URL_2,
-  process.env.IMAGE_URL_3,
-  process.env.IMAGE_URL_4,
-  process.env.IMAGE_URL_5,
-  process.env.IMAGE_URL_6
-].filter(url => url); // Filter out any undefined values
+  'https://media.discordapp.net/attachments/1463730676380598513/1464093043421347850/image.png?ex=69743667&is=6972e4e7&hm=df217ac9e24d6da6c24df2347fc6ae7305b4f5842c879ff1918968787e00638d&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105415695532054/image.png?ex=697441ec&is=6972f06c&hm=0452757a2c0caf1a1c225c865bb986478d50731fe1b2939c0dd87f6b841c89f4&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105533572124807/image.png?ex=69744208&is=6972f088&hm=f6c24b296d40539a50d1eae51f34cc64dd0cb4e097172e7b56421cc0b0a6a90d&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105641445556300/image.png?ex=69744222&is=6972f0a2&hm=7c2af0e103cc357f9a032efba5085414f14ca9ba7f6ad4e9d7070d453fef948b&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105762107162758/image.png?ex=6974423f&is=6972f0bf&hm=b0729e5ad8f8cc7c7bf00745cefdda6716badffa0f495011cb0a7a5aae30ed43&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105909268517158/image.png?ex=69744262&is=6972f0e2&hm=deffa0accaf137e8f6a721b6aced17e527c178d8539284966f123cd5156f3428&=&format=webp&quality=lossless'
+];
 
 // X-Super-Properties header (base64 encoded client info to mimic Discord desktop)
 const superProperties = Buffer.from(JSON.stringify({

@@ -1,0 +1,22 @@
+{
+  "name": "ban-lookup-bot",
+  "version": "1.0.0",
+  "description": "Discord ban lookup bot for Railway",
+  "main": "ban_lookup_bot.js",
+  "scripts": {
+    "start": "node ban_lookup_bot.js"
+  },
+  "keywords": [
+    "discord",
+    "bot"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js-selfbot-v13": "^2.14.12",
+    "axios": "^1.6.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

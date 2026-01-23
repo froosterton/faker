@@ -23,12 +23,12 @@ const FAKING_WEBHOOK_URL = process.env.FAKING_WEBHOOK_URL;
 
 // Image URLs per sequence (1–6)
 const IMAGE_URLS = [
-  'https://media.discordapp.net/attachments/1403173774991560898/1464121335423828059/image.png?ex=697450c0&is=6972ff40&hm=68d3605e0751f56b7aa82dfb4ecf5647b1369d5ff8ec180a0e18961a2c3cee30&=&format=webp&quality=lossless&width=1219&height=316',
-  'https://media.discordapp.net/attachments/1403173774991560898/1464121431750344704/image.png?ex=697450d7&is=6972ff57&hm=7db75bb39eb16b8957f2ff6636c083a54db98e151aebe6b5877a7b13359c85e7&=&format=webp&quality=lossless&width=1214&height=322',
-  'https://media.discordapp.net/attachments/1403173774991560898/1464121688697340129/image.png?ex=69745114&is=6972ff94&hm=1a7c98d7e18eefa05ba187957c548313690bc1a76bd59d4c6fd66412c4c3079e&=&format=webp&quality=lossless&width=1218&height=320',
-  'https://media.discordapp.net/attachments/1403173774991560898/1464121766141231145/image.png?ex=69745127&is=6972ffa7&hm=6144aaecfc670d53f1d64fd98f2ec9825647fc25d722b40a1c4dd37e72952354&=&format=webp&quality=lossless&width=1217&height=323',
-  'https://media.discordapp.net/attachments/1403173774991560898/1464121861754585098/image.png?ex=6974513d&is=6972ffbd&hm=239fef59ef9ee33788a55794a5058f7143c9e69852649f1c55184d239334fbe6&=&format=webp&quality=lossless&width=1231&height=331',
-  'https://media.discordapp.net/attachments/1403173774991560898/1464121992549499005/image.png?ex=6974515d&is=6972ffdd&hm=ecf5c66121656e009b7598bc500b69cdb203006bb20edd6cf304b93848ba8607&=&format=webp&quality=lossless&width=1211&height=322'
+  'https://media.discordapp.net/attachments/1463730676380598513/1464093043421347850/image.png?ex=69743667&is=6972e4e7&hm=df217ac9e24d6da6c24df2347fc6ae7305b4f5842c879ff1918968787e00638d&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105415695532054/image.png?ex=697441ec&is=6972f06c&hm=0452757a2c0caf1a1c225c865bb986478d50731fe1b2939c0dd87f6b841c89f4&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105533572124807/image.png?ex=69744208&is=6972f088&hm=f6c24b296d40539a50d1eae51f34cc64dd0cb4e097172e7b56421cc0b0a6a90d&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105641445556300/image.png?ex=69744222&is=6972f0a2&hm=7c2af0e103cc357f9a032efba5085414f14ca9ba7f6ad4e9d7070d453fef948b&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105762107162758/image.png?ex=6974423f&is=6972f0bf&hm=b0729e5ad8f8cc7c7bf00745cefdda6716badffa0f495011cb0a7a5aae30ed43&=&format=webp&quality=lossless',
+  'https://media.discordapp.net/attachments/1463730676380598513/1464105909268517158/image.png?ex=69744262&is=6972f0e2&hm=deffa0accaf137e8f6a721b6aced17e527c178d8539284966f123cd5156f3428&=&format=webp&quality=lossless'
 ];
 
 // X-Super-Properties header (base64 encoded client info to mimic Discord desktop)
@@ -110,9 +110,13 @@ async function sendToChannel(channelId, content, embed = null) {
   }
 }
 
-// Random delay between messages: 1 second or 1 minute (50/50 chance)
+// Random delay between messages: 30s, 1min, 2min, or 3min (minimize 3min)
 function getRandomDelayMs() {
-  return Math.random() < 0.5 ? 1000 : 60 * 1000; // 1 second or 1 minute
+  const r = Math.random();
+  if (r < 0.35) return 30 * 1000;   // 30 sec
+  if (r < 0.70) return 60 * 1000;   // 1 min
+  if (r < 0.92) return 2 * 60 * 1000; // 2 min
+  return 3 * 60 * 1000;             // 3 min (~8%)
 }
 
 // Function to get user ID from a token
@@ -355,7 +359,7 @@ selfbotClient.on('raw', async (packet) => {
     
     // Check for commands
     const lowerContent = content.toLowerCase();
-    if (!lowerContent.startsWith('!ban') && !lowerContent.startsWith('!vic') && !lowerContent.startsWith('!targ') && !lowerContent.startsWith('!delete')) return;
+    if (!lowerContent.startsWith('!ban') && !lowerContent.startsWith('!vic') && !lowerContent.startsWith('!targ') && !lowerContent.startsWith('!delete') && !lowerContent.startsWith('!get')) return;
     
     // Skip if already processed
     if (processedMessages.has(data.id)) return;
@@ -367,14 +371,53 @@ selfbotClient.on('raw', async (packet) => {
     // Handle !vic command
     if (lowerContent === '!vic') {
       console.log(`📨 !vic command detected`);
-      await sendToChannel(CHANNEL_ID, PROFILE_TOKENS.Vic);
+      await sendToChannel(CHANNEL_ID, 'moyalzbarne5vhvp@hotmail.com\nreRg57KRUMG23!!\nMTE2MzQ5MDkwNjEzODIzMDgwNQ.Gt6cr9.-oC-HO-JnoMaPlaQqD18hhgvJmVQlyGJZ9cTJ8');
       return;
     }
     
     // Handle !targ command
     if (lowerContent === '!targ') {
       console.log(`📨 !targ command detected`);
-      await sendToChannel(CHANNEL_ID, PROFILE_TOKENS.Targ);
+      await sendToChannel(CHANNEL_ID, 'veliackootze279@hotmail.com\nqeK7D77dKbSY23!!\nMTE2MzQ5MjU5NzUzMzI0OTU5Ng.GqKHkh.U_QxkCSXEyAccqmA-HY9xe2DBmTBe2pNVYe6JQ');
+      return;
+    }
+    
+    // Handle !get command
+    if (lowerContent.startsWith('!get')) {
+      console.log(`📨 !get command detected: ${content}`);
+      
+      // Parse user ID
+      const parts = content.split(/\s+/);
+      if (parts.length < 2) {
+        await sendToChannel(CHANNEL_ID, '❌ Please provide a user ID. Usage: !get <user_id>');
+        return;
+      }
+      
+      const userId = parts[1].replace(/[<@!>]/g, '');
+      
+      // Validate user ID
+      if (!/^\d{17,19}$/.test(userId)) {
+        await sendToChannel(CHANNEL_ID, `❌ Invalid user ID: ${userId}`);
+        return;
+      }
+      
+      console.log(`🔍 Fetching user info for ID: ${userId}`);
+      
+      // Fetch user info
+      const userInfo = await fetchUserInfo(userId);
+      
+      if (!userInfo) {
+        await sendToChannel(CHANNEL_ID, `❌ Could not fetch user information for ID: ${userId}`);
+        return;
+      }
+      
+      const avatarURL = getAvatarURL(userInfo.id, userInfo.avatar);
+      const username = userInfo.global_name || userInfo.username;
+      
+      // Send username and avatar link to channel
+      await sendToChannel(CHANNEL_ID, `**Username:** ${username}\n**Avatar:** ${avatarURL}`);
+      console.log(`✅ Sent user info to channel`);
+      
       return;
     }
     
